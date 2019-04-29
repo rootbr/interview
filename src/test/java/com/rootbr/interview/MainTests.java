@@ -8,7 +8,7 @@ public class MainTests {
 
   @Test
   public void test() {
-    var b = true;
-    assertThat(b).isTrue();
+//    var b = true;
+//    assertThat(b).isTrue();
   }
 }
