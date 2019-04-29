@@ -9,6 +9,6 @@ public class MainTests {
   @Test
   public void test() {
     var b = true;
-    assertThat(true).isTrue();
+    assertThat(b).isTrue();
   }
 }
