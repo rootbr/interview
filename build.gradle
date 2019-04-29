@@ -26,4 +26,5 @@ dependencies {
     testCompile 'org.mockito:mockito-core:2.27.0'
     testCompile 'org.mockito:mockito-all:1.9.5'
     testCompile 'org.mockito:junit-jupiter:2.20.0'
+    testCompile 'org.awaitility:awaitility:3.1.6'
 }
