@@ -11,7 +11,7 @@ public class TreeTests {
   @Test
   @DisplayName("после добавления нового элемента, нода находится в дереве и её значение соответствует вставленному")
   public void test1() {
-    final var tree = new Node<Integer>();
+    final var tree = new Node<Integer>(null);
 
     tree.put(1);
 
@@ -22,7 +22,7 @@ public class TreeTests {
   @Test
   @DisplayName("после добавления нескольких элементов, они все находятся в дереве")
   public void test2() {
-    final var tree = new Node<Integer>();
+    final var tree = new Node<Integer>(null);
 
     tree.put(2);
     tree.put(3);
@@ -36,7 +36,7 @@ public class TreeTests {
   @Test
   @DisplayName("после удаления элемента, он не находится в дереве")
   public void test3() {
-    final var tree = new Node<Integer>();
+    final var tree = new Node<Integer>(null);
     tree.put(2);
     tree.put(3);
     tree.put(1);
