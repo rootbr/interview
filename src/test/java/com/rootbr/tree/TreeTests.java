@@ -50,6 +50,30 @@ public class TreeTests {
     assertThat(tree.get(NODE_WITHOUT_LISTS)).isNull();
   }
 
+  @Test
+  @DisplayName("после удаления элемента c левым элементом, он не находится в дереве, а левые элемент находится")
+  public void test4() {
+    final Node<Integer> tree = defaultTree();
+    tree.put(NODE_ONLY_LEFT_NODE - 1);
+
+    tree.delete(NODE_ONLY_LEFT_NODE);
+
+    assertThat(tree.get(NODE_ONLY_LEFT_NODE)).isNull();
+    assertThat(tree.get(NODE_ONLY_LEFT_NODE - 1)).isNotNull();
+  }
+
+  @Test
+  @DisplayName("после удаления элемента c правым элементом, он не находится в дереве, а правый элемент находится")
+  public void test5() {
+    final Node<Integer> tree = defaultTree();
+    tree.put(NODE_ONLY_RIGHT_NODE + 1);
+
+    tree.delete(NODE_ONLY_RIGHT_NODE);
+
+    assertThat(tree.get(NODE_ONLY_RIGHT_NODE)).isNull();
+    assertThat(tree.get(NODE_ONLY_RIGHT_NODE + 1)).isNotNull();
+  }
+
   private Node<Integer> defaultTree() {
     final var tree = new Node<Integer>(null);
     tree.put(NODE_PARENT);

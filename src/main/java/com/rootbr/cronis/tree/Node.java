@@ -45,17 +45,28 @@ public class Node<T extends Number & Comparable> {
     }
   }
 
-  public void delete(T value) {
+  public boolean delete(T value) {
     final Node<T> node = get(value);
+    if (node == null) {
+      return false;
+    }
 
-    if (node.parent == null) {
-      this.value = null;
-    } else if (node.left == null && node.right == null) {
+    if (node.left == null && node.right == null) {
       if (node.parent.right == node) {
         node.parent.right = null;
       } else {
         node.parent.left = null;
       }
+    } else if (
+        (node.left == null && node.right != null)
+            || (node.left != null && node.right == null)
+    ) {
+      if (node.parent.right == node) {
+        node.parent.right = node.left != null ? node.left : node.right;
+      } else {
+        node.parent.left = node.left != null ? node.left : node.right;
+      }
     }
+    return true;
   }
 }
