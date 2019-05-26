@@ -11,6 +11,7 @@ public class TreeTests {
   private static final int NODE_PARENT = 5;
   private static final int NODE_WITHOUT_LISTS = 4;
   private static final int NODE_ONLY_RIGHT_NODE = 1;
+  private static final int NODE_MINIMUM = 1;
   private static final int NODE_ONLY_LEFT_NODE = 10;
   private static final int NODE_WITH_BOTH_NODE = 7;
   private static final int ANY_VALUE = 11;
@@ -72,6 +73,35 @@ public class TreeTests {
 
     assertThat(tree.get(NODE_ONLY_RIGHT_NODE)).isNull();
     assertThat(tree.get(NODE_ONLY_RIGHT_NODE + 1)).isNotNull();
+  }
+
+  @Test
+  @DisplayName("min возвращает минимальное значение дерева")
+  public void test8() {
+    final Node<Integer> tree = defaultTree();
+
+    assertThat(tree.min(tree).value).isEqualTo(NODE_MINIMUM);
+  }
+
+  @Test
+  @DisplayName("после удаления узла c обоими ребенками, узел не находится в дереве, а оба ребенка находится")
+  public void test6() {
+
+    final Node<Integer> tree = defaultTree();
+    final Node<Integer> node = tree.get(NODE_WITH_BOTH_NODE);
+
+    tree.delete(NODE_WITH_BOTH_NODE);
+
+    assertThat(tree.get(NODE_WITH_BOTH_NODE)).isNull();
+    assertThat(tree.get(node.left.value)).isNotNull();
+    assertThat(tree.get(node.right.value)).isNotNull();
+  }
+
+  @Test
+  @DisplayName("после удаления узла c обоими ребенками, порядок нод не меняется")
+  public void test7() {
+
+    assertThat(false).isTrue();
   }
 
   private Node<Integer> defaultTree() {

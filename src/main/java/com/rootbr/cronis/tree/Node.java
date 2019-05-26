@@ -1,30 +1,33 @@
 package com.rootbr.cronis.tree;
 
-public class Node<T extends Number & Comparable> {
-  public Node left;
-  public Node right;
-  public Node parent;
+public class Node<T extends Comparable> {
+  public Node<T> left;
+  public Node<T> right;
+  public Node<T> parent;
   public T value;
 
   public Node(Node parent) {
     this.parent = parent;
   }
 
-  public void put(T v) {
+  public Node<T> put(T v) {
     if (this.value == null) {
       this.value = v;
+      return this;
     }
     final var b = v.compareTo(this.value);
     if (b > 0) {
       if (this.right == null) {
         this.right = new Node(this);
       }
-      right.put(v);
+      return right.put(v);
     } else if (b < 0) {
       if (this.left == null) {
         this.left = new Node(this);
       }
-      left.put(v);
+      return left.put(v);
+    } else {
+      return this;
     }
   }
 
@@ -57,16 +60,28 @@ public class Node<T extends Number & Comparable> {
       } else {
         node.parent.left = null;
       }
-    } else if (
-        (node.left == null && node.right != null)
-            || (node.left != null && node.right == null)
-    ) {
+    } else if ((node.left == null && node.right != null)
+        || (node.left != null && node.right == null)) {
       if (node.parent.right == node) {
         node.parent.right = node.left != null ? node.left : node.right;
       } else {
         node.parent.left = node.left != null ? node.left : node.right;
       }
+    } else {
+      final Node<T> min = min(node);
+      if (node.parent.right == node) {
+        node.parent.right = min;
+      } else {
+        node.parent.left = min;
+      }
     }
     return true;
+  }
+
+  public Node<T> min(Node<T> node) {
+    if (node.left == null) {
+      return node;
+    }
+    return min(node.left);
   }
 }
