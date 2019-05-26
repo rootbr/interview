@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public class TreeTests {
 
   @Test
-  @DisplayName("после добавление нового элемента, нода находится в дереве и её значение соответствует вставленному")
+  @DisplayName("после добавления нового элемента, нода находится в дереве и её значение соответствует вставленному")
   public void test1() {
     final var tree = new Node<Integer>();
 
@@ -20,7 +20,7 @@ public class TreeTests {
   }
 
   @Test
-  @DisplayName("после добавление нескольких элементов, они все находятся в дереве")
+  @DisplayName("после добавления нескольких элементов, они все находятся в дереве")
   public void test2() {
     final var tree = new Node<Integer>();
 
@@ -31,5 +31,18 @@ public class TreeTests {
     assertThat(tree.get(1)).isNotNull();
     assertThat(tree.get(2)).isNotNull();
     assertThat(tree.get(3)).isNotNull();
+  }
+
+  @Test
+  @DisplayName("после удаления элемента, он не находится в дереве")
+  public void test3() {
+    final var tree = new Node<Integer>();
+    tree.put(2);
+    tree.put(3);
+    tree.put(1);
+
+    tree.delete(3);
+
+    assertThat(tree.get(3)).isNull();
   }
 }

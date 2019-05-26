@@ -39,4 +39,9 @@ public class Node<T extends Number & Comparable> {
       return this;
     }
   }
+
+  public void delete(T value) {
+    final Node<T> node = get(value);
+
+  }
 }
