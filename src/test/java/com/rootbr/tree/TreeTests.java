@@ -25,7 +25,7 @@ public class TreeTests {
     tree.put(ANY_VALUE);
 
     assertThat(tree.get(ANY_VALUE)).isNotNull();
-    assertThat(tree.get(ANY_VALUE).value).isEqualTo(ANY_VALUE);
+    assertThat(tree.get(ANY_VALUE).getValue()).isEqualTo(ANY_VALUE);
   }
 
   @Test
@@ -81,7 +81,7 @@ public class TreeTests {
   public void test6() {
     final Node<Integer> tree = defaultTree();
 
-    assertThat(tree.min(tree).value).isEqualTo(NODE_MINIMUM);
+    assertThat(tree.min(tree).getValue()).isEqualTo(NODE_MINIMUM);
   }
 
   @Test
@@ -94,8 +94,8 @@ public class TreeTests {
     tree.delete(NODE_WITH_BOTH_NODE);
 
     assertThat(tree.get(NODE_WITH_BOTH_NODE)).isNull();
-    assertThat(tree.get(node.left.value)).isNotNull();
-    assertThat(tree.get(node.right.value)).isNotNull();
+    assertThat(tree.get(node.getLeft().getValue())).isNotNull();
+    assertThat(tree.get(node.getRight().getValue())).isNotNull();
   }
 
   @Test

@@ -4,13 +4,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Node<T extends Comparable> {
-  public Node<T> left;
-  public Node<T> right;
-  public Node<T> parent;
-  public T value;
+  private Node<T> left;
+  private Node<T> right;
+  private Node<T> parent;
+  private T value;
 
   public Node(Node<T> parent) {
     this.parent = parent;
+  }
+
+  public Node<T> getLeft() {
+    return left;
+  }
+
+  public void setLeft(Node<T> left) {
+    this.left = left;
+  }
+
+  public Node<T> getRight() {
+    return right;
+  }
+
+  public void setRight(Node<T> right) {
+    this.right = right;
+  }
+
+  public Node<T> getParent() {
+    return parent;
+  }
+
+  public void setParent(Node<T> parent) {
+    this.parent = parent;
+  }
+
+  public T getValue() {
+    return value;
+  }
+
+  public void setValue(T value) {
+    this.value = value;
   }
 
   public Node<T> put(T v) {
@@ -73,6 +105,9 @@ public class Node<T extends Comparable> {
       node.parent.right = newNode;
     } else {
       node.parent.left = newNode;
+    }
+    if (newNode != null) {
+      newNode.setParent(node.parent);
     }
   }
 
