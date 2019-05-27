@@ -135,19 +135,16 @@ public class Node<T extends Comparable> {
     return min(node.right);
   }
 
-  public List<T> perOrderTraversal() {
+  public List<T> symmetricalTraversal() {
     List<T> result = new ArrayList<>();
-    perOrderTraversal(this, result);
+    symmetricalTraversal(this, result);
     return result;
   }
 
-  private void perOrderTraversal(Node<T> node, List<T> result) {
-    if (node.left != null) {
-      perOrderTraversal(node.left, result);
-    }
+  private void symmetricalTraversal(Node<T> node, List<T> result) {
+    if (node == null) return;
+    symmetricalTraversal(node.left, result);
     result.add(node.value);
-    if (node.right != null) {
-      perOrderTraversal(node.right, result);
-    }
+    symmetricalTraversal(node.right, result);
   }
 }

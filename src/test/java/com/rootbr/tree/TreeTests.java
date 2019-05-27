@@ -81,7 +81,7 @@ public class TreeTests {
   public void test6() {
     final Node<Integer> tree = defaultTree();
 
-    assertThat(tree.min(tree).getValue()).isEqualTo(NODE_MINIMUM);
+    assertThat(tree.min()).isEqualTo(NODE_MINIMUM);
   }
 
   @Test
@@ -99,11 +99,11 @@ public class TreeTests {
   }
 
   @Test
-  @DisplayName("perOrderTraversal выводит отсортированные массив")
+  @DisplayName("simmetricalTraversal выводит отсортированные массив")
   public void test8() {
     Node<Integer> tree = defaultTree();
 
-    List<Integer> sortList = tree.perOrderTraversal();
+    List<Integer> sortList = tree.symmetricalTraversal();
 
     assertThat(sortList).containsExactly(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
   }
@@ -115,7 +115,7 @@ public class TreeTests {
 
     tree.delete(NODE_WITH_BOTH_NODE);
 
-    List<Integer> sortList = tree.perOrderTraversal();
+    List<Integer> sortList = tree.symmetricalTraversal();
     assertThat(sortList).containsExactly(1, 2, 3, 4, 5, 6, 8, 9, 10);
   }
 
