@@ -9,7 +9,7 @@ public class Node<T extends Comparable> {
   public Node<T> parent;
   public T value;
 
-  public Node(Node parent) {
+  public Node(Node<T> parent) {
     this.parent = parent;
   }
 
@@ -21,12 +21,12 @@ public class Node<T extends Comparable> {
     final var b = v.compareTo(this.value);
     if (b > 0) {
       if (this.right == null) {
-        this.right = new Node(this);
+        this.right = new Node<>(this);
       }
       return right.put(v);
     } else if (b < 0) {
       if (this.left == null) {
-        this.left = new Node(this);
+        this.left = new Node<>(this);
       }
       return left.put(v);
     } else {
@@ -51,33 +51,30 @@ public class Node<T extends Comparable> {
     }
   }
 
-  public boolean delete(T value) {
+  public void delete(T value) {
     final Node<T> node = get(value);
     if (node == null) {
-      return false;
+      return;
     }
 
     if (node.left == null && node.right == null) {
-      if (node.parent.right == node) {
-        node.parent.right = null;
-      } else {
-        node.parent.left = null;
-      }
-    } else if ((node.left == null && node.right != null)
-        || (node.left != null && node.right == null)) {
-      if (node.parent.right == node) {
-        node.parent.right = node.left != null ? node.left : node.right;
-      } else {
-        node.parent.left = node.left != null ? node.left : node.right;
-      }
+      setParent(node, null);
+    } else if (node.left == null || node.right == null) {
+      setParent(node, node.left != null ? node.left : node.right);
     } else {
       final Node<T> min = min(node.right);
       node.value = min.value;
       min.parent.left = min.right;
     }
-    return true;
   }
 
+  private void setParent(Node<T> node, Node<T> newNode) {
+    if (node.parent.right == node) {
+      node.parent.right = newNode;
+    } else {
+      node.parent.left = newNode;
+    }
+  }
 
 
   public Node<T> min(Node<T> node) {
