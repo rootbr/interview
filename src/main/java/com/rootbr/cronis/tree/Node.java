@@ -112,11 +112,27 @@ public class Node<T extends Comparable> {
   }
 
 
-  public Node<T> min(Node<T> node) {
+  public T min() {
+    Node<T> min = min(this);
+    return min != null ? min.value : null;
+  }
+
+  private Node<T> min(Node<T> node) {
     if (node.left == null) {
       return node;
     }
     return min(node.left);
+  }
+  public T max() {
+    Node<T> max = max(this);
+    return max != null ? max.value : null;
+  }
+
+  private Node<T> max(Node<T> node) {
+    if (node.right == null) {
+      return node;
+    }
+    return min(node.right);
   }
 
   public List<T> perOrderTraversal() {
