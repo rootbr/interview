@@ -1,5 +1,6 @@
 package com.rootbr.cronis.tree;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Node<T extends Comparable> {
@@ -87,6 +88,18 @@ public class Node<T extends Comparable> {
   }
 
   public List<T> perOrderTraversal() {
-    return null;
+    List<T> result = new ArrayList<>();
+    perOrderTraversal(this, result);
+    return result;
+  }
+
+  private void perOrderTraversal(Node<T> node, List<T> result) {
+    if (node.left != null) {
+      perOrderTraversal(node.left, result);
+    }
+    result.add(node.value);
+    if (node.right != null) {
+      perOrderTraversal(node.right, result);
+    }
   }
 }
