@@ -14,7 +14,6 @@ public class Main {
     try {
       return i * f(i - 1);
     } finally {
-
       System.out.println(Integer.MAX_VALUE-i);
     }
   }

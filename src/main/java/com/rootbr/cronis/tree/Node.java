@@ -1,5 +1,7 @@
 package com.rootbr.cronis.tree;
 
+import java.util.List;
+
 public class Node<T extends Comparable> {
   public Node<T> left;
   public Node<T> right;
@@ -68,20 +70,23 @@ public class Node<T extends Comparable> {
         node.parent.left = node.left != null ? node.left : node.right;
       }
     } else {
-      final Node<T> min = min(node);
-      if (node.parent.right == node) {
-        node.parent.right = min;
-      } else {
-        node.parent.left = min;
-      }
+      final Node<T> min = min(node.right);
+      node.value = min.value;
+      min.parent.left = min.right;
     }
     return true;
   }
+
+
 
   public Node<T> min(Node<T> node) {
     if (node.left == null) {
       return node;
     }
     return min(node.left);
+  }
+
+  public List<T> perOrderTraversal() {
+    return null;
   }
 }

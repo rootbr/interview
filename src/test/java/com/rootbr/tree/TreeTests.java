@@ -3,6 +3,7 @@ package com.rootbr.tree;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.rootbr.cronis.tree.Node;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -100,8 +101,11 @@ public class TreeTests {
   @Test
   @DisplayName("после удаления узла c обоими ребенками, порядок нод не меняется")
   public void test7() {
+    Node<Integer> tree = defaultTree();
 
-    assertThat(false).isTrue();
+    List<Integer> sortList = tree.perOrderTraversal();
+
+    assertThat(sortList).containsExactly(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
   }
 
   private Node<Integer> defaultTree() {
