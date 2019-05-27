@@ -78,7 +78,7 @@ public class TreeTests {
 
   @Test
   @DisplayName("min возвращает минимальное значение дерева")
-  public void test8() {
+  public void test6() {
     final Node<Integer> tree = defaultTree();
 
     assertThat(tree.min(tree).value).isEqualTo(NODE_MINIMUM);
@@ -86,7 +86,7 @@ public class TreeTests {
 
   @Test
   @DisplayName("после удаления узла c обоими ребенками, узел не находится в дереве, а оба ребенка находится")
-  public void test6() {
+  public void test7() {
 
     final Node<Integer> tree = defaultTree();
     final Node<Integer> node = tree.get(NODE_WITH_BOTH_NODE);
@@ -99,13 +99,24 @@ public class TreeTests {
   }
 
   @Test
-  @DisplayName("после удаления узла c обоими ребенками, порядок нод не меняется")
-  public void test7() {
+  @DisplayName("perOrderTraversal выводит отсортированные массив")
+  public void test8() {
     Node<Integer> tree = defaultTree();
 
     List<Integer> sortList = tree.perOrderTraversal();
 
     assertThat(sortList).containsExactly(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+  }
+
+  @Test
+  @DisplayName("после удаления узла c обоими ребенками, порядок нод не меняется")
+  public void test9() {
+    Node<Integer> tree = defaultTree();
+
+    tree.delete(NODE_WITH_BOTH_NODE);
+
+    List<Integer> sortList = tree.perOrderTraversal();
+    assertThat(sortList).containsExactly(1, 2, 3, 4, 5, 6, 8, 9, 10);
   }
 
   private Node<Integer> defaultTree() {
