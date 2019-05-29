@@ -147,4 +147,17 @@ public class Node<T extends Comparable> {
     result.add(node.value);
     symmetricalTraversal(node.right, result);
   }
+
+  public List<T> preOrderTraversal() {
+    List<T> result = new ArrayList<>();
+    preOrderTraversal(this, result);
+    return result;
+  }
+
+  private void preOrderTraversal(Node<T> node, List<T> result) {
+    if (node == null) return;
+    result.add(node.value);
+    preOrderTraversal(node.left, result);
+    preOrderTraversal(node.right, result);
+  }
 }

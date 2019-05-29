@@ -2,10 +2,13 @@ package com.rootbr.tree;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.rootbr.RandomTreeProvider;
 import com.rootbr.cronis.tree.Node;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ArgumentsSource;
 
 public class TreeTests {
 
@@ -99,13 +102,18 @@ public class TreeTests {
   }
 
   @Test
+  @ParameterizedTest
+  @ArgumentsSource(RandomTreeProvider.class)
   @DisplayName("simmetricalTraversal выводит отсортированные массив")
-  public void test8() {
-    Node<Integer> tree = defaultTree();
+  public void test8(Node<Integer> tree) {
 
     List<Integer> sortList = tree.symmetricalTraversal();
 
-    assertThat(sortList).containsExactly(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+    int oldValue = Integer.MIN_VALUE;
+    for (Integer e : sortList) {
+      assertThat(e).isGreaterThanOrEqualTo(oldValue);
+      oldValue = e;
+    }
   }
 
   @Test
@@ -116,7 +124,11 @@ public class TreeTests {
     tree.delete(NODE_WITH_BOTH_NODE);
 
     List<Integer> sortList = tree.symmetricalTraversal();
-    assertThat(sortList).containsExactly(1, 2, 3, 4, 5, 6, 8, 9, 10);
+    int oldValue = Integer.MIN_VALUE;
+    for (Integer e : sortList) {
+      assertThat(e).isGreaterThanOrEqualTo(oldValue);
+      oldValue = e;
+    }
   }
 
   private Node<Integer> defaultTree() {
