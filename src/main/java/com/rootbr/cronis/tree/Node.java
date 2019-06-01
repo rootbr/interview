@@ -2,6 +2,7 @@ package com.rootbr.cronis.tree;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Node<T extends Comparable<T>> {
   private Node<T> left;
@@ -44,12 +45,12 @@ public class Node<T extends Comparable<T>> {
     }
     final var b = v.compareTo(this.value);
     if (b > 0) {
-      if (this.right == null) {
+      if (notExist(this.right )) {
         this.right = new Node<>(v);
       }
       return right.put(v);
     } else if (b < 0) {
-      if (this.left == null) {
+      if (notExist(this.left )) {
         this.left = new Node<>(v);
       }
       return left.put(v);
@@ -59,6 +60,9 @@ public class Node<T extends Comparable<T>> {
   }
 
   public Node<T> get(T value) {
+    if (value == null || this.value == null) {
+      return null;
+    }
     final var b = value.compareTo(this.value);
     if (b > 0) {
       if (notExist(this.right)) {
@@ -82,15 +86,15 @@ public class Node<T extends Comparable<T>> {
     }
 
     if (node.left == null || node.right == null) {
-      Node<T> child = getChildOrNull(node);
-      moveNode(child, node);
+      move(childOrNull(node), node);
     } else {
       final Node<T> min = min(node.right);
       node.value = min.value;
+      move(childOrNull(min), min);
     }
   }
 
-  private Node<T> getChildOrNull(Node<T> node) {
+  private Node<T> childOrNull(Node<T> node) {
     return node.left != null && node.left.value != null ? node.left : node.right;
   }
 
@@ -98,7 +102,7 @@ public class Node<T extends Comparable<T>> {
     return node == null || node.value == null;
   }
 
-  private void moveNode(final Node<T> from, final Node<T> to) {
+  private void move(final Node<T> from, final Node<T> to) {
     if (from != null && from.value != null) {
       to.value = from.value;
       to.right = from.right;
@@ -141,7 +145,7 @@ public class Node<T extends Comparable<T>> {
   }
 
   private void symmetricalTraversal(Node<T> node, List<T> result) {
-    if (node == null) {
+    if (notExist(node)) {
       return;
     }
     symmetricalTraversal(node.left, result);
@@ -162,5 +166,22 @@ public class Node<T extends Comparable<T>> {
     result.add(node.value);
     preOrderTraversal(node.left, result);
     preOrderTraversal(node.right, result);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Node<?> node = (Node<?>) o;
+    return Objects.equals(value, node.value);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(value);
   }
 }

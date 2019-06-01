@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.rootbr.RandomTreeProvider;
 import com.rootbr.cronis.tree.Node;
 import java.util.List;
+import java.util.Random;
+import java.util.logging.Logger;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,6 +21,9 @@ public class TreeTests {
   private static final int NODE_ONLY_LEFT_NODE = 10;
   private static final int NODE_WITH_BOTH_NODE = 7;
   private static final int ANY_VALUE = 11;
+  private static Random random = new Random();
+  private static final Logger log = Logger.getLogger(TreeTests.class.getName());
+
 
   @Test
   @DisplayName("после добавления нового элемента, нода находится в дереве и её значение соответствует вставленному")
@@ -93,12 +98,31 @@ public class TreeTests {
 
     final Node<Integer> tree = defaultTree();
     final Node<Integer> node = tree.get(NODE_WITH_BOTH_NODE);
+    final int l = node.getLeft().getValue();
+    final int r = node.getRight().getValue();
+
 
     tree.delete(NODE_WITH_BOTH_NODE);
 
     assertThat(tree.get(NODE_WITH_BOTH_NODE)).isNull();
-    assertThat(tree.get(node.getLeft().getValue())).isNotNull();
-    assertThat(tree.get(node.getRight().getValue())).isNotNull();
+    assertThat(tree.get(l)).isNotNull();
+    assertThat(tree.get(r)).isNotNull();
+  }
+
+  @Test
+  @DisplayName("после удаления узла c обоими ребенками, value узла не находится на в одной из его веток")
+  public void test7_1() {
+
+    final Node<Integer> tree = defaultTree();
+    final Node<Integer> node = tree.get(NODE_WITH_BOTH_NODE);
+    final int l = node.getLeft().getValue();
+    final int r = node.getRight().getValue();
+
+
+    tree.delete(NODE_WITH_BOTH_NODE);
+
+    assertThat(node.getRight().get(node.getValue())).isNull();
+    assertThat(node.getLeft().get(node.getValue())).isNull();
   }
 
   @ParameterizedTest
@@ -108,10 +132,30 @@ public class TreeTests {
 
     List<Integer> sortList = tree.symmetricalTraversal();
 
-    int oldValue = Integer.MIN_VALUE;
+     int oldValue = Integer.MIN_VALUE;
     for (Integer e : sortList) {
       assertThat(e).isGreaterThanOrEqualTo(oldValue);
       oldValue = e;
+    }
+  }
+
+  @ParameterizedTest
+  @ArgumentsSource(RandomTreeProvider.class)
+  @DisplayName("удаленный value не находится и новое его значение не находится ни в одной из его веток")
+  public void test8_1(Node<Integer> tree) {
+    int value = random.nextInt(100);
+    Node<Integer> node = tree.get(value);
+
+    tree.delete(value);
+
+    assertThat(tree.get(value)).isNull();
+    if (node != null) {
+      if (node.getRight() != null) {
+        assertThat(node.getRight().get(node.getValue())).isNull();
+      }
+      if (node.getLeft() != null) {
+        assertThat(node.getLeft().get(node.getValue())).isNull();
+      }
     }
   }
 

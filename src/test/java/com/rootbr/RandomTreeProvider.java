@@ -12,11 +12,11 @@ public class RandomTreeProvider implements ArgumentsProvider {
 
   @Override
   public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
-    Node[] trees = new Node[10];
+    Node[] trees = new Node[1000];
     for (int i = 0; i < trees.length; i++) {
       Node<Integer> tree = new Node<>(null);
-      for (int j = 0; j < random.nextInt(1000); j++) {
-        tree.put(random.nextInt());
+      for (int j = 0; j < random.nextInt(200); j++) {
+        tree.put(random.nextInt(50));
       }
       trees[i] = tree;
     }
