@@ -3,7 +3,7 @@ package com.rootbr.cronis.tree;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Node<T extends Comparable> {
+public class Node<T extends Comparable<T>> {
   private Node<T> left;
   private Node<T> right;
   private Node<T> parent;

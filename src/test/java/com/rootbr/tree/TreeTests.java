@@ -101,7 +101,6 @@ public class TreeTests {
     assertThat(tree.get(node.getRight().getValue())).isNotNull();
   }
 
-  @Test
   @ParameterizedTest
   @ArgumentsSource(RandomTreeProvider.class)
   @DisplayName("simmetricalTraversal выводит отсортированные массив")
