@@ -2,11 +2,13 @@ package com.rootbr.cronis.recursion;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class PermutationsTests {
 
   @Test
+  @Disabled
   public void generateArrayWithAllVariants() {
     char[] source = {'a', 'b', 'c'};
 

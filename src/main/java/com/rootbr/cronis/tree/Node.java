@@ -6,11 +6,10 @@ import java.util.List;
 public class Node<T extends Comparable<T>> {
   private Node<T> left;
   private Node<T> right;
-  private Node<T> parent;
   private T value;
 
-  public Node(Node<T> parent) {
-    this.parent = parent;
+  public Node(T value) {
+    this.value = value;
   }
 
   public Node<T> getLeft() {
@@ -29,13 +28,6 @@ public class Node<T extends Comparable<T>> {
     this.right = right;
   }
 
-  public Node<T> getParent() {
-    return parent;
-  }
-
-  public void setParent(Node<T> parent) {
-    this.parent = parent;
-  }
 
   public T getValue() {
     return value;
@@ -53,12 +45,12 @@ public class Node<T extends Comparable<T>> {
     final var b = v.compareTo(this.value);
     if (b > 0) {
       if (this.right == null) {
-        this.right = new Node<>(this);
+        this.right = new Node<>(v);
       }
       return right.put(v);
     } else if (b < 0) {
       if (this.left == null) {
-        this.left = new Node<>(this);
+        this.left = new Node<>(v);
       }
       return left.put(v);
     } else {
@@ -69,12 +61,12 @@ public class Node<T extends Comparable<T>> {
   public Node<T> get(T value) {
     final var b = value.compareTo(this.value);
     if (b > 0) {
-      if (this.right == null) {
+      if (notExist(this.right)) {
         return null;
       }
       return right.get(value);
     } else if (b < 0) {
-      if (this.left == null) {
+      if (notExist(this.left)) {
         return null;
       }
       return left.get(value);
@@ -89,28 +81,34 @@ public class Node<T extends Comparable<T>> {
       return;
     }
 
-    if (node.left == null && node.right == null) {
-      setParent(node, null);
-    } else if (node.left == null || node.right == null) {
-      setParent(node, node.left != null ? node.left : node.right);
+    if (node.left == null || node.right == null) {
+      Node<T> child = getChildOrNull(node);
+      moveNode(child, node);
     } else {
       final Node<T> min = min(node.right);
       node.value = min.value;
-      min.parent.left = min.right;
     }
   }
 
-  private void setParent(Node<T> node, Node<T> newNode) {
-    if (node.parent.right == node) {
-      node.parent.right = newNode;
+  private Node<T> getChildOrNull(Node<T> node) {
+    return node.left != null && node.left.value != null ? node.left : node.right;
+  }
+
+  private boolean notExist(Node<T> node) {
+    return node == null || node.value == null;
+  }
+
+  private void moveNode(final Node<T> from, final Node<T> to) {
+    if (from != null && from.value != null) {
+      to.value = from.value;
+      to.right = from.right;
+      to.left = from.left;
     } else {
-      node.parent.left = newNode;
-    }
-    if (newNode != null) {
-      newNode.setParent(node.parent);
+      to.value = null;
+      to.right = null;
+      to.left = null;
     }
   }
-
 
   public T min() {
     Node<T> min = min(this);
@@ -123,6 +121,7 @@ public class Node<T extends Comparable<T>> {
     }
     return min(node.left);
   }
+
   public T max() {
     Node<T> max = max(this);
     return max != null ? max.value : null;
@@ -142,7 +141,9 @@ public class Node<T extends Comparable<T>> {
   }
 
   private void symmetricalTraversal(Node<T> node, List<T> result) {
-    if (node == null) return;
+    if (node == null) {
+      return;
+    }
     symmetricalTraversal(node.left, result);
     result.add(node.value);
     symmetricalTraversal(node.right, result);
@@ -155,7 +156,9 @@ public class Node<T extends Comparable<T>> {
   }
 
   private void preOrderTraversal(Node<T> node, List<T> result) {
-    if (node == null) return;
+    if (node == null) {
+      return;
+    }
     result.add(node.value);
     preOrderTraversal(node.left, result);
     preOrderTraversal(node.right, result);
