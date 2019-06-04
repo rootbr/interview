@@ -1,6 +1,7 @@
 package com.rootbr.cronis.tree;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -183,5 +184,11 @@ public class Node<T extends Comparable<T>> {
   @Override
   public int hashCode() {
     return Objects.hash(value);
+  }
+
+  public LinkedList<T> toLinkedList() {
+    LinkedList<T> result = new LinkedList<>();
+    symmetricalTraversal(this, result);
+    return result;
   }
 }
